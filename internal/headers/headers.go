@@ -58,7 +58,6 @@ func (h *Headers) Replace(name string, value string) {
 func (h *Headers) Set(name string, value string) {
 	name = strings.ToLower(name)
 	if v, ok := h.headers[name]; ok {
-		fmt.Println("Appending header", name)
 		h.headers[name] = fmt.Sprintf("%s,%s", v, value)
 	} else {
 		h.headers[name] = value

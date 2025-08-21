@@ -29,7 +29,6 @@ func (s *Server) handle(conn io.ReadWriteCloser) {
 	r, err := request.RequestFromReader(conn)
 	if err != nil {
 		responseWriter.WriteStatusLine(response.StatusBadRequest)
-
 		responseWriter.WriteHeaders(*headers)
 		return
 	}
