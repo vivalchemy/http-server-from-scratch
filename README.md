@@ -138,7 +138,7 @@ This is an educational project, but feel free to submit issues or pull requests 
 
 ## License
 
-MIT License - see [LICENSE] file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
