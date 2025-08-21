@@ -3,7 +3,7 @@ package response
 import (
 	"fmt"
 	"io"
-	"vivalchemy/http-server-from-scratch/internal/headers"
+	"vivalchemy/http-server-from-scratch/headers"
 )
 
 type Response struct {

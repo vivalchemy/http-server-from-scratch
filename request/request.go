@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"vivalchemy/http-server-from-scratch/internal/headers"
+	"vivalchemy/http-server-from-scratch/headers"
 )
 
 type parserState string

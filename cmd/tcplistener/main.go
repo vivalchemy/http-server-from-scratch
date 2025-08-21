@@ -8,7 +8,7 @@ import (
 	"net"
 	"os"
 	"time"
-	"vivalchemy/http-server-from-scratch/internal/request"
+	"vivalchemy/http-server-from-scratch/request"
 )
 
 func main() {
