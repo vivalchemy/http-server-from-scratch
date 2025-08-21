@@ -74,6 +74,11 @@ func (h *Headers) GetAll() map[string]string {
 	return h.headers
 }
 
+func (h *Headers) Delete(name string) {
+	name = strings.ToLower(name)
+	delete(h.headers, strings.ToLower(name))
+}
+
 func (h *Headers) GetIntMust(name string, defaultValue int) int {
 	valueStr, exists := h.Get(name)
 	if !exists {

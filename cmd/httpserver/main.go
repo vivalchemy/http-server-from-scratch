@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"vivalchemy/http-server-from-scratch/internal/request"
 	"vivalchemy/http-server-from-scratch/internal/response"
@@ -67,6 +69,37 @@ func main() {
 		} else if req.TargetPath == "/myproblem" && req.Method == "GET" {
 			status = response.StatusInternalServerError
 			body = respond500()
+		} else if strings.HasPrefix(req.TargetPath, "/httpbin/") && req.Method == "GET" {
+			target := req.TargetPath
+			res, err := http.Get("https://httpbin.org/" + target[len("/httpbin/"):])
+			if err != nil {
+				body = respond500()
+				status = response.StatusInternalServerError
+			} else {
+				w.WriteStatusLine(response.StatusOk)
+				h.Delete("Content-Length")
+				h.Set("Transfer-Encoding", "chunked")
+				h.Replace("Content-Type", res.Header.Get("Content-Type"))
+				w.WriteHeaders(*h)
+
+				for {
+					data := make([]byte, 32)
+					n, err := res.Body.Read(data)
+					if err != nil {
+						break
+						// IDEALLY this should be done and something else for the other errors
+						// if errors.Is(io.EOF, err) {
+						// 	break
+						// }
+					}
+					w.WriteBody(fmt.Appendf(nil, "%x\r\n", n))
+					w.WriteBody(data[:n])
+					w.WriteBody([]byte("\r\n"))
+
+				}
+				w.WriteBody([]byte("0\r\n\r\n"))
+				return
+			}
 		}
 
 		h.Replace("Content-Type", "text/html")
